@@ -25,7 +25,28 @@ public class Streams {
     transactions.stream()
       .filter(t -> t.getYear() == 2011)
       .sorted(Comparator.comparing(Transaction::getValue))
-      .forEach(t -> System.out.println(t));
+      .forEach(System.out::println);
+
+    // unique cities
+    transactions.stream()
+      .map(t -> t.getTrader().getCity())
+      .distinct()
+      .forEach(System.out::println);
+
+    // traders from Cambridge
+    transactions.stream()
+      .filter(t -> "Cambridge".equals(t.getTrader().getCity()))
+      .map(Transaction::getTrader)
+      .sorted(Comparator.comparing(Trader::getName))
+      .distinct()
+      .forEach(System.out::println);
+    
+    // string of all traders' names sorted alphabetically
+    System.out.println(transactions.stream()
+      .map(t -> t.getTrader().getName())
+      .distinct()
+      .sorted()
+      .reduce("", (a, b) -> a + b));
   }
 
 }
