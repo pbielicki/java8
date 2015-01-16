@@ -3,6 +3,7 @@ package com.bielu.domain;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Streams {
 
@@ -22,16 +23,20 @@ public class Streams {
     );
     
     // all trans. in 2011 sorted by value ascending
-    transactions.stream()
+    List<Transaction> tr2011 = transactions.stream()
       .filter(t -> t.getYear() == 2011)
       .sorted(Comparator.comparing(Transaction::getValue))
-      .forEach(System.out::println);
+      .collect(Collectors.toList());
+    
+    System.out.println(tr2011);
 
     // unique cities
-    transactions.stream()
+    List<String> cities = transactions.stream()
       .map(t -> t.getTrader().getCity())
       .distinct()
-      .forEach(System.out::println);
+      .collect(Collectors.toList());
+    
+    System.out.println(cities);
 
     // traders from Cambridge
     transactions.stream()
@@ -47,6 +52,18 @@ public class Streams {
       .distinct()
       .sorted()
       .reduce("", (a, b) -> a + b));
+    
+    boolean anyoneInMilan = transactions.stream()
+        .anyMatch(t -> "Milan".equals(t.getTrader().getCity()));
+    
+    System.out.println("Anyone in Milan: " + anyoneInMilan);
+    
+    List<Integer> valuesCambridge = transactions.stream()
+        .filter(t -> "Cambridge".equals(t.getTrader().getCity()))
+        .map(Transaction::getValue)
+        .collect(Collectors.toList());
+    
+    System.out.println(valuesCambridge);
   }
 
 }
