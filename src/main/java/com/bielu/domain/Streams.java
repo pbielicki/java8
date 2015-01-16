@@ -51,13 +51,15 @@ public class Streams {
       .map(t -> t.getTrader().getName())
       .distinct()
       .sorted()
-      .reduce("", (a, b) -> a + b));
+      .reduce("", (a, b) -> a + b)); // inefficient
     
+    // are any traders in Milan
     boolean anyoneInMilan = transactions.stream()
         .anyMatch(t -> "Milan".equals(t.getTrader().getCity()));
     
     System.out.println("Anyone in Milan: " + anyoneInMilan);
     
+    // values of all transactions in Cambridge
     List<Integer> valuesCambridge = transactions.stream()
         .filter(t -> "Cambridge".equals(t.getTrader().getCity()))
         .map(Transaction::getValue)
