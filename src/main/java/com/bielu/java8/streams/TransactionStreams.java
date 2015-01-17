@@ -5,6 +5,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bielu.java8.streams.domain.Trader;
+import com.bielu.java8.streams.domain.Transaction;
+
 public class TransactionStreams {
 
   public static void main(String[] args) {
