@@ -1,4 +1,4 @@
-package com.bielu.domain;
+package com.bielu.java8.streams;
 
 public class Transaction {
 

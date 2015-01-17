@@ -1,11 +1,11 @@
-package com.bielu.domain;
+package com.bielu.java8.streams;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Streams {
+public class TransactionStreams {
 
   public static void main(String[] args) {
     Trader raoul = new Trader("Raoul", "Cambridge");
