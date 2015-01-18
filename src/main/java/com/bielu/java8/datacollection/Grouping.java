@@ -22,6 +22,8 @@ public class Grouping {
     System.out.println(dishesByType);
     
     // multilevel grouping
+    // following code does not compile in Eclipse below version 4.5 M4
+    // see https://bugs.eclipse.org/bugs/show_bug.cgi?id=457791
     Map<DishType, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel =
         DomainFactory.menu()
         .stream()
