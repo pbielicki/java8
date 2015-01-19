@@ -7,7 +7,7 @@ public class Dish {
   private final int calories;
   private final DishType type;
 
-  public Dish(String name, boolean vegetarian, int calories, DishType type) {
+  Dish(String name, boolean vegetarian, int calories, DishType type) {
     this.name = name;
     this.vegetarian = vegetarian;
     this.calories = calories;

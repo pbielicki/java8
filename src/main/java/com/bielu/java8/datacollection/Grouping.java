@@ -1,5 +1,7 @@
 package com.bielu.java8.datacollection;
 
+import static com.bielu.java8.domain.DomainFactory.menu;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -10,12 +12,11 @@ import java.util.stream.Collectors;
 import com.bielu.java8.domain.Dish;
 import com.bielu.java8.domain.Dish.CaloricLevel;
 import com.bielu.java8.domain.Dish.DishType;
-import com.bielu.java8.domain.DomainFactory;
 
 public class Grouping {
 
   public static void main(String[] args) {
-    Map<DishType, List<Dish>> dishesByType = DomainFactory.menu()
+    Map<DishType, List<Dish>> dishesByType = menu()
         .stream()
         .collect(Collectors.groupingBy(Dish::getType));
     
@@ -24,8 +25,7 @@ public class Grouping {
     // multilevel grouping
     // following code does not compile in Eclipse below version 4.5 M4
     // see https://bugs.eclipse.org/bugs/show_bug.cgi?id=457791
-    Map<DishType, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel =
-        DomainFactory.menu()
+    Map<DishType, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel = menu()
         .stream()
         .collect(Collectors.groupingBy(Dish::getType,
             Collectors.groupingBy(dish -> {
@@ -37,19 +37,17 @@ public class Grouping {
     System.out.println(dishesByTypeCaloricLevel);
     
     // subgroups
-    Map<DishType, Long> typesCount = DomainFactory.menu()
+    Map<DishType, Long> typesCount = menu()
         .stream()
         .collect(Collectors.groupingBy(Dish::getType, Collectors.counting()));
     
-    Map<DishType, Optional<Dish>> mostCaloricByTypeOptional =
-        DomainFactory.menu()
+    Map<DishType, Optional<Dish>> mostCaloricByTypeOptional = menu()
         .stream()
         .collect(Collectors.groupingBy(
             Dish::getType, Collectors.maxBy(
                 Comparator.comparing(Dish::getCalories))));
 
-    Map<DishType, Dish> mostCaloricByType =
-        DomainFactory.menu()
+    Map<DishType, Dish> mostCaloricByType = menu()
         .stream()
         .collect(Collectors.groupingBy(Dish::getType, 
             Collectors.collectingAndThen(
@@ -60,8 +58,7 @@ public class Grouping {
     System.out.println(mostCaloricByTypeOptional);
     System.out.println(mostCaloricByType);
     
-    Map<DishType, Set<CaloricLevel>> caloricLevelsByType =
-        DomainFactory.menu()
+    Map<DishType, Set<CaloricLevel>> caloricLevelsByType = menu()
         .stream()
         .collect(Collectors.groupingBy(Dish::getType,
             Collectors.mapping(dish -> {
