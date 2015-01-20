@@ -3,6 +3,7 @@ package com.bielu.java8.datacollection;
 import static com.bielu.java8.domain.DomainFactory.menu;
 
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -65,9 +66,11 @@ public class Grouping {
               if (dish.getCalories() <= 400) return CaloricLevel.DIET;
               if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
               return CaloricLevel.FAT;
-            }, Collectors.toSet())));
+            //}, Collectors.toSet())));
+            }, Collectors.toCollection(LinkedHashSet::new))));
     
     System.out.println(caloricLevelsByType);
+    System.out.println(caloricLevelsByType.values().iterator().next().getClass());
   }
 
 }
