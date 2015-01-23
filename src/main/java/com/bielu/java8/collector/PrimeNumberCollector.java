@@ -13,14 +13,25 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
-import java.util.stream.IntStream;
 
 public class PrimeNumberCollector implements Collector<Integer, Map<Boolean, List<Integer>>, Map<Boolean, List<Integer>>> {
 
-  public static void main(String[] args) {
-    System.out.println(IntStream.rangeClosed(2, 100)
-        .boxed()
-        .collect(new PrimeNumberCollector()));
+  static boolean isPrime(List<Integer> primes, Integer candidate) {
+    int candidateRoot = (int) Math.sqrt((double) candidate);
+    return takeWhile(primes, i -> i <= candidateRoot)
+        .stream()
+        .noneMatch(p -> candidate % p == 0);
+  }
+
+  static <A> List<A> takeWhile(List<A> list, Predicate<A> p) {
+    int i = 0;
+    for (A item : list) {
+      if (!p.test(item)) {
+        return list.subList(0,  i);
+      }
+      i++;
+    }
+    return list;
   }
   
   @SuppressWarnings("serial")
@@ -39,24 +50,6 @@ public class PrimeNumberCollector implements Collector<Integer, Map<Boolean, Lis
     return (acc, candidate) -> {
       acc.get(isPrime(acc.get(true), candidate)).add(candidate);
     };
-  }
-
-  private boolean isPrime(List<Integer> primes, Integer candidate) {
-    int candidateRoot = (int) Math.sqrt((double) candidate);
-    return takeWhile(primes, i -> i <= candidateRoot)
-        .stream()
-        .noneMatch(p -> candidate % p == 0);
-  }
-
-  private <A> List<A> takeWhile(List<A> list, Predicate<A> p) {
-    int i = 0;
-    for (A item : list) {
-      if (!p.test(item)) {
-        return list.subList(0,  i);
-      }
-      i++;
-    }
-    return list;
   }
 
   @Override
